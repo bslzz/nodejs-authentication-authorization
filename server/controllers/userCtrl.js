@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { isEmpty, isLength, isEmail } = require('../utils/validation');
 
 module.exports = {
   register: async (req, res) => {
@@ -8,8 +9,16 @@ module.exports = {
       const { email, password } = req.body;
 
       //validation
-      if (!email || !password)
+      if (isEmpty(email) || isEmpty(password))
         return res.status(400).json({ msg: 'All fields are required' });
+
+      if (!isEmail(email))
+        return res.status(400).json({ msg: 'Invalid Email' });
+
+      if (isLength(password))
+        return res
+          .status(400)
+          .json({ msg: 'Password must be 6 or more characters long' });
 
       const user = await User.findOne({ email });
       if (user) return res.status(400).json({ msg: 'Email already exists' });
@@ -29,7 +38,12 @@ module.exports = {
         (err, token) => {
           if (err) return res.status(400).json({ msg: `Error: ${err}` });
 
-          res.json({ token, savedUser });
+          //send the token in HTTP-only cookie
+          res
+            .cookie('token', token, {
+              httpOnly: true,
+            })
+            .json({ savedUser });
         }
       );
     } catch (error) {
@@ -42,8 +56,16 @@ module.exports = {
       const { email, password } = req.body;
 
       //validation
-      if (!email || !password)
+      if (isEmpty(email) || isEmpty(password))
         return res.status(400).json({ msg: 'All fields are required' });
+
+      if (!isEmail(email))
+        return res.status(400).json({ msg: 'Invalid Email' });
+
+      if (isLength(password))
+        return res
+          .status(400)
+          .json({ msg: 'Password must be 6 or more characters long' });
 
       const user = await User.findOne({ email });
       if (!user) return res.status(401).json({ msg: 'Invalid credentials' });
