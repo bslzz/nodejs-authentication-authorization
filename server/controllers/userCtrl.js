@@ -77,8 +77,21 @@ module.exports = {
       jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, (err, token) => {
         if (err) return res.status(400).json({ msg: `Error: ${err}` });
 
-        res.json({ token, msg: 'User Logged in' });
+        //send the token in HTTP-only cookie
+        res
+          .cookie('token', token, {
+            httpOnly: true,
+          })
+          .json({ msg: 'Logged in successfully' });
       });
+    } catch (error) {
+      res.status(500).json({ msg: `Error: ${error}` });
+    }
+  },
+
+  logOut: (req, res) => {
+    try {
+      res.clearCookie('token').json({ msg: 'Logged Out' });
     } catch (error) {
       res.status(500).json({ msg: `Error: ${error}` });
     }
