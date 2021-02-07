@@ -11,6 +11,7 @@ app.use(cookieParser());
 
 //routes
 app.use('/user', require('./routes/userRoute'));
+app.use('/customer', require('./routes/customerRoute'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running at PORT ${PORT}`));

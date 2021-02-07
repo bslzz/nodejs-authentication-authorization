@@ -1,11 +1,13 @@
 const express = require('express');
-const registerCtrl = require('../controllers/userCtrl/registerCtrl');
-const loginCtrl = require('../controllers/userCtrl/loginCtrl');
-const logOutCtrl = require('../controllers/userCtrl/logOutCtrl');
 const router = express.Router();
+const { register } = require('../controllers/userCtrl/registerCtrl');
+const { login } = require('../controllers/userCtrl/loginCtrl');
+const { logOut } = require('../controllers/userCtrl/logOutCtrl');
+const { allUsers } = require('../controllers/userCtrl/allUsersCtrl');
 
-router.route('/register').post(registerCtrl);
-router.route('/login').post(loginCtrl);
-router.route('/logout').get(logOutCtrl);
+router.route('/register').post(register);
+router.route('/login').post(login);
+router.route('/logout').get(logOut);
+router.route('/allusers').get(allUsers);
 
 module.exports = router;
