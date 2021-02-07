@@ -1,9 +1,11 @@
 const express = require('express');
-const userCtrl = require('../controllers/userCtrl');
+const registerCtrl = require('../controllers/userCtrl/registerCtrl');
+const loginCtrl = require('../controllers/userCtrl/loginCtrl');
+const logOutCtrl = require('../controllers/userCtrl/logOutCtrl');
 const router = express.Router();
 
-router.route('/register').post(userCtrl.register);
-router.route('/login').post(userCtrl.login);
-router.route('/logout').get(userCtrl.logOut);
+router.route('/register').post(registerCtrl);
+router.route('/login').post(loginCtrl);
+router.route('/logout').get(logOutCtrl);
 
 module.exports = router;
