@@ -3,10 +3,10 @@ import { REGISTER } from '../../redux/constants';
 import { registerRequestSaga } from '../requests/registerRequest';
 
 console.log(registerRequestSaga);
-function* registerHandlerSaga() {
+function* registerHandlerSaga({ user }) {
   try {
-    const user = yield call(registerRequestSaga);
     console.log(user);
+    yield call(registerRequestSaga);
   } catch (error) {
     console.warn(error);
   }

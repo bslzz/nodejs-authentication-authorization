@@ -1,8 +1,7 @@
 import { REGISTER } from '../constants';
 
 const initialState = {
-  email: '',
-  password: '',
+  users: [],
 };
 
 const registerReducer = (state = initialState, action) => {
@@ -10,6 +9,7 @@ const registerReducer = (state = initialState, action) => {
     case REGISTER:
       return {
         ...state,
+        users: action.user,
       };
     default:
       return state;
