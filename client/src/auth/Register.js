@@ -10,8 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import { Field, reduxForm } from 'redux-form';
+
 import { registerUser } from '../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
+
+import { RegisterValidate as validate } from '../utils/validation';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const Register = () => {
+const Register = ({ handleSubmit, pristine, submitting }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -47,7 +51,7 @@ const Register = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const registerSubmit = (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
     try {
       dispatch(registerUser(user));
@@ -55,6 +59,23 @@ const Register = () => {
       console.warn(error);
     }
   };
+
+  const renderTextField = ({
+    input,
+    label,
+    variant,
+    meta: { touched, invalid, error },
+    ...custom
+  }) => (
+    <TextField
+      variant={variant}
+      label={label}
+      error={touched && invalid}
+      helperText={touched && error}
+      {...input}
+      {...custom}
+    />
+  );
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,58 +87,58 @@ const Register = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={registerSubmit}>
+
+        <form
+          onSubmit={() => handleSubmit(submitForm)}
+          className={classes.form}
+          noValidate
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
+              <Field
                 variant="outlined"
+                name="firstName"
                 fullWidth
-                id="firstName"
                 label="First Name"
+                component={renderTextField}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <Field
+                component={renderTextField}
                 variant="outlined"
                 fullWidth
-                id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <Field
                 variant="outlined"
-                required
                 fullWidth
-                id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
-                autoFocus
+                type="email"
+                component={renderTextField}
                 value={email}
                 onChange={registerChangeHandler}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <Field
                 variant="outlined"
-                required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
-                id="password"
-                autoComplete="current-password"
+                component={renderTextField}
                 value={password}
                 onChange={registerChangeHandler}
               />
             </Grid>
           </Grid>
           <Button
+            disabled={pristine || submitting}
             type="submit"
             fullWidth
             variant="contained"
@@ -139,4 +160,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default reduxForm({
+  form: 'register',
+  validate,
+})(Register);

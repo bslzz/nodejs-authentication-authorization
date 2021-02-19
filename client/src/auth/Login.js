@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 const Login = () => {
   const [userInput, setUserInput] = useState({
@@ -16,10 +16,10 @@ const Login = () => {
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        'http://localhost:5000/user/login',
-        userInput
-      );
+      // const response = await axios.post(
+      //   'http://localhost:5000/user/login',
+      //   userInput
+      // );
     } catch (error) {
       console.warn(error);
     }
