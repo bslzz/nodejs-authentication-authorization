@@ -6,6 +6,7 @@ export const renderTextField = ({
   label,
   input,
   variant,
+  autoComplete,
   meta: { touched, invalid, error },
   ...custom
 }) => (
@@ -19,6 +20,7 @@ export const renderTextField = ({
     label={label}
     error={touched && invalid}
     helperText={touched && error}
+    autoComplete={autoComplete}
     {...input}
     {...custom}
   />
