@@ -43,7 +43,7 @@ module.exports = {
             .cookie('token', token, {
               httpOnly: true,
             })
-            .json({ savedUser });
+            .json({ msg: 'Register Success' });
         }
       );
     } catch (error) {
