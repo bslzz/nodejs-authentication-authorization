@@ -6,10 +6,10 @@ import { Grid, Button } from '@material-ui/core';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormValues } from 'redux-form';
-import { registerUser } from '../../redux/actions/authAction';
-import Notification from './RegisterForm.snackbar';
 
-const RegisterForm = ({ pristine, submitting, classes, handleSubmit }) => {
+// import Notification from './RegisterForm.snackbar';
+
+const LoginForm = ({ pristine, submitting, classes, handleSubmit }) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = (event, reason) => {
@@ -21,14 +21,13 @@ const RegisterForm = ({ pristine, submitting, classes, handleSubmit }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-  const formValues = getFormValues('register')(state);
+  const formValues = getFormValues('login')(state);
   const email = formValues && formValues['email'];
   const password = formValues && formValues['password'];
 
   const submitForm = () => {
     const user = { email, password };
     try {
-      dispatch(registerUser(user));
       setOpen(true);
     } catch (error) {
       console.warn(error);
@@ -69,20 +68,20 @@ const RegisterForm = ({ pristine, submitting, classes, handleSubmit }) => {
         disabled={pristine || submitting}
         fullWidth
       >
-        Sign Up
+        Login
       </Button>
 
       <Grid container justify="flex-end">
         <Grid item>
-          <Link to="/login" variant="body2">
-            Already have an account? Sign in
+          <Link to="/register" variant="body2">
+            Don't have an account? Sign up
           </Link>
         </Grid>
       </Grid>
 
-      <Notification handleClose={handleClose} open={open} />
+      {/* <Notification handleClose={handleClose} open={open} /> */}
     </form>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import { Container, CssBaseline, Typography, Avatar } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { RegisterValidate as validate } from '../utils/validation';
+import { authValidate as validate } from '../utils/validation';
 
 import RegisterForm from '../containers/RegisterForm/RegisterForm';
 import { useStyles } from '../containers/RegisterForm/RegisterForm.style';
@@ -33,6 +33,6 @@ const Register = ({ handleSubmit, pristine, submitting }) => {
 };
 
 export default reduxForm({
-  form: 'register', // a unique identifier for this form
+  form: 'register',
   validate,
 })(Register);

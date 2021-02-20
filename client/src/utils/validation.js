@@ -1,4 +1,4 @@
-export const RegisterValidate = (values) => {
+export const authValidate = (values) => {
   const errors = {};
   const requiredFields = ['email', 'password'];
   requiredFields.forEach((field) => {
