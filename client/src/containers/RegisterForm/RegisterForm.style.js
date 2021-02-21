@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(5, 0, 2),
     backgroundColor: theme.palette.secondary.main,
   },
   signUp: {
