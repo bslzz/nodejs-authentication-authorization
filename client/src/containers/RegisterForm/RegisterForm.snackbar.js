@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 const Notification = ({ handleClose, open }) => {
   const successMsg = store.getState().auth.successMsg;
   const errorMsg = store.getState().auth.errorMsg;
+
   return (
     <div>
       {successMsg && (
